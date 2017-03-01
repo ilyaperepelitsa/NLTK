@@ -79,3 +79,11 @@ print(ne_chunk(nltk.pos_tag(word_tokenize(sent)), binary = False))
     (ORGANIZATION Stanford/NNP University/NNP)
     in/IN
     NY (GPE California/NNP)))
+
+
+
+
+from nltk.tag.stanford import StanfordNERTagger
+st = StanfordNERTagger("/Users/ilyaperepelitsa/quant/stanford-ner/classifiers/english.all.3class.distsim.crf.ser.gz", "/Users/ilyaperepelitsa/quant/stanford-ner/stanford-ner.jar")
+
+st.tag("Rami Eid is studying at Stony Brook University in NY".split())
