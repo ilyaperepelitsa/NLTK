@@ -66,24 +66,24 @@ print(trigram_tagger.evaluate(test_data))
 
 
 ### NE CHUNKING
-
-import nltk
-from nltk import ne_chunk
-sent = "Mark is studying at Stanford University in California"
-print(ne_chunk(nltk.pos_tag(word_tokenize(sent)), binary = False))
-(S
-    (PERSON Mark/NNP)
-    is/VBZ
-    studying/VBG
-    at/IN
-    (ORGANIZATION Stanford/NNP University/NNP)
-    in/IN
-    NY (GPE California/NNP)))
+#
+# import nltk
+# from nltk import ne_chunk
+# sent = "Mark is studying at Stanford University in California"
+# print(ne_chunk(nltk.pos_tag(word_tokenize(sent)), binary = False))
+# (S
+#     (PERSON Mark/NNP)
+#     is/VBZ
+#     studying/VBG
+#     at/IN
+#     (ORGANIZATION Stanford/NNP University/NNP)
+#     in/IN
+#     NY (GPE California/NNP)))
 
 
 
 
 from nltk.tag.stanford import StanfordNERTagger
-st = StanfordNERTagger("/Users/ilyaperepelitsa/quant/stanford-ner/classifiers/english.all.3class.distsim.crf.ser.gz", "/Users/ilyaperepelitsa/quant/stanford-ner/stanford-ner.jar")
+st = StanfordNERTagger("/Users/ilyaperepelitsa/quant/stanford-ner/classifiers/english.all.3class.distsim.crf.ser.gz", "/Users/ilyaperepelitsa/quant/stanford-ner/")
 
 st.tag("Rami Eid is studying at Stony Brook University in NY".split())
