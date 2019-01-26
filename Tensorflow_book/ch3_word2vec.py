@@ -157,3 +157,17 @@ train_labels = tf.placeholder(tf.int32, shape=[batch_size, 1])
 # as we have already defined the IDs of the words selected
 # as validation data
 valid_dataset = tf.constant(valid_examples, dtype=tf.int32)
+
+
+
+# Variables
+
+# Embedding layer, contains the word embeddings
+embeddings = tf.Variable(tf.random_uniform([vocabulary_size, embedding_size], -1.0, 1.0))
+
+# Softmax Weights and Biases
+softmax_weights = tf.Variable(
+    tf.truncated_normal([vocabulary_size, embedding_size],
+                        stddev=0.5 / math.sqrt(embedding_size))
+)
+softmax_biases = tf.Variable(tf.random_uniform([vocabulary_size],0.0,0.01))
