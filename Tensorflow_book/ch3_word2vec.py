@@ -192,3 +192,7 @@ normalized_embeddings = embeddings / norm
 valid_embeddings = tf.nn.embedding_lookup(
 normalized_embeddings, valid_dataset)
 similarity = tf.matmul(valid_embeddings, tf.transpose(normalized_embeddings))
+
+
+# Optimizer.
+optimizer = tf.train.AdagradOptimizer(1.0).minimize(loss)
