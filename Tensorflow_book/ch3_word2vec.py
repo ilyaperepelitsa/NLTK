@@ -106,9 +106,9 @@ def generate_batch_skip_gram(batch_size, window_size):
         # avoid the target word itself as a prediction
         # fill in batch and label numpy arrays
         for j in list(range(window_size))+list(range(window_size+1,2*window_size+1)):
-        batch[i * num_samples + k] = buffer[window_size]
-        labels[i * num_samples + k, 0] = buffer[j]
-        k += 1
+            batch[i * num_samples + k] = buffer[window_size]
+            labels[i * num_samples + k, 0] = buffer[j]
+            k += 1
 
         # Everytime we read num_samples data points,
         # we have created the maximum number of datapoints possible
