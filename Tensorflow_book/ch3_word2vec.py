@@ -66,4 +66,4 @@ def build_dataset(words):
     return data, count, dictionary, reverse_dictionary
 
 data, count, dictionary, reverse_dictionary = build_dataset(tokenized_text)
-dictionary[:4]
+dictionary[0:4]
