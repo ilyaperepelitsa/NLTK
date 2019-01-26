@@ -140,6 +140,7 @@ valid_window = 50
 # When selecting valid examples, we select some of the most frequent words as well as
 # some moderately rare words as well
 valid_examples = np.array(random.sample(range(valid_window), valid_size))
+valid_examples
 valid_examples = np.append(valid_examples,random.sample(range(1000, 1000+valid_window), valid_size),axis=0)
 
 num_sampled = 32 # Number of negative examples to sample.
