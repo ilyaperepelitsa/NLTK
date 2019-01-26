@@ -144,3 +144,16 @@ valid_examples = np.array(random.sample(range(valid_window), valid_size))
 valid_examples = np.append(valid_examples,random.sample(range(1000, 1000+valid_window), valid_size),axis=0)
 # valid_examples
 num_sampled = 32 # Number of negative examples to sample.
+
+
+
+tf.reset_default_graph()
+
+# Training input data (target word IDs).
+train_dataset = tf.placeholder(tf.int32, shape=[batch_size])
+# Training input label data (context word IDs)
+train_labels = tf.placeholder(tf.int32, shape=[batch_size, 1])
+# Validation input data, we don't need a placeholder
+# as we have already defined the IDs of the words selected
+# as validation data
+valid_dataset = tf.constant(valid_examples, dtype=tf.int32)
