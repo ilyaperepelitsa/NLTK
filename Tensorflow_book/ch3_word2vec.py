@@ -126,3 +126,20 @@ for window_size in [1, 2]:
     print('\nwith window_size = %d:' %window_size)
     print('    batch:', [reverse_dictionary[bi] for bi in batch])
     print('    labels:', [reverse_dictionary[li] for li in labels.reshape(8)])
+
+
+batch_size = 128 # Data points in a single batch
+embedding_size = 128 # Dimension of the embedding vector.
+window_size = 4 # How many words to consider left and right.
+
+# We pick a random validation set to sample nearest neighbors
+valid_size = 16 # Random set of words to evaluate similarity on.
+# We sample valid datapoints randomly from a large window without always being deterministic
+valid_window = 50
+
+# When selecting valid examples, we select some of the most frequent words as well as
+# some moderately rare words as well
+valid_examples = np.array(random.sample(range(valid_window), valid_size))
+valid_examples = np.append(valid_examples,random.sample(range(1000, 1000+valid_window), valid_size),axis=0)
+
+num_sampled = 32 # Number of negative examples to sample.
