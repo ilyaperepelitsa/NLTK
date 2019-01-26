@@ -22,4 +22,5 @@ import pandas as pd
 
 pew = pd.read_csv("/Volumes/data_pew/text_data/stack_overflow_pandas/SO_pandas.csv")
 pew
-text = pew['Markdown'].str.cat(sep = )
+text = pew['Markdown'].str.cat(sep = ". ")
+text
