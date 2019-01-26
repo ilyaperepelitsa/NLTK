@@ -17,7 +17,7 @@ from math import ceil
 import csv
 
 
-import pandas as p
+import pandas as pd
 
 
-pew = pandas.read_csv("/Volumes/data_pew/text_data/stack_overflow_pandas/SO_pandas.csv")
+pew = pd.read_csv("/Volumes/data_pew/text_data/stack_overflow_pandas/SO_pandas.csv")
