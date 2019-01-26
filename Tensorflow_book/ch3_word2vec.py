@@ -183,3 +183,12 @@ loss = tf.reduce_mean(
         weights=softmax_weights, biases=softmax_biases, inputs=embed,
         labels=train_labels, num_sampled=num_sampled, num_classes=vocabulary_size)
 )
+
+
+# Compute the similarity between minibatch examples and all embeddings.
+# We use the cosine distance:
+norm = tf.sqrt(tf.reduce_sum(tf.square(embeddings), 1, keepdims=True))
+normalized_embeddings = embeddings / norm
+valid_embeddings = tf.nn.embedding_lookup(
+normalized_embeddings, valid_dataset)
+similarity = tf.matmul(valid_embeddings, tf.transpose(normalized_embeddings))
