@@ -102,20 +102,20 @@ def generate_batch_skip_gram(batch_size, window_size):
     # The outper for loop repeat this for batch_size//num_samples times
     # to produce a full batch
     for i in range(batch_size // num_samples):
-    k=0
-    # avoid the target word itself as a prediction
-    # fill in batch and label numpy arrays
-    for j in list(range(window_size))+list(range(window_size+1,2*window_size+1)):
-    batch[i * num_samples + k] = buffer[window_size]
-    labels[i * num_samples + k, 0] = buffer[j]
-    k += 1
+        k=0
+        # avoid the target word itself as a prediction
+        # fill in batch and label numpy arrays
+        for j in list(range(window_size))+list(range(window_size+1,2*window_size+1)):
+        batch[i * num_samples + k] = buffer[window_size]
+        labels[i * num_samples + k, 0] = buffer[j]
+        k += 1
 
-    # Everytime we read num_samples data points,
-    # we have created the maximum number of datapoints possible
-    # withing a single span, so we need to move the span by 1
-    # to create a fresh new span
-    buffer.append(data[data_index])
-    data_index = (data_index + 1) % len(data)
+        # Everytime we read num_samples data points,
+        # we have created the maximum number of datapoints possible
+        # withing a single span, so we need to move the span by 1
+        # to create a fresh new span
+        buffer.append(data[data_index])
+        data_index = (data_index + 1) % len(data)
     return batch, labels
 
 print('data:', [reverse_dictionary[di] for di in data[:8]])
