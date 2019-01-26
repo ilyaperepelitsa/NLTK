@@ -24,7 +24,7 @@ pew = pd.read_csv("/Volumes/data_pew/text_data/stack_overflow_pandas/SO_pandas.c
 pew
 text = pew['Markdown'].str.cat(sep = ". ")
 len(text)
+text = nltk.word_tokenize(file_string)
 
 
-
-t
+text[0:199]
