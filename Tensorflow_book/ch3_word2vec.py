@@ -15,3 +15,7 @@ import operator # sorting items in dictionary by value
 #nltk.download() #tokenizers/punkt/PY3/english.pickle
 from math import ceil
 import csv
+
+
+
+pew = 
