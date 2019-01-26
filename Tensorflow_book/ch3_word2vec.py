@@ -26,3 +26,6 @@ text = pew['Markdown'].str.cat(sep = ". ")
 len(text)
 lower_text = text.lower()
 tokenized_text = nltk.word_tokenize(lower_text)
+
+
+vocabulary_size = 50000
