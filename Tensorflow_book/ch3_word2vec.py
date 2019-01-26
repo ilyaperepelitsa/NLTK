@@ -47,14 +47,14 @@ def build_dataset(words):
     # Traverse through all the text we have and produce a list
     # where each element corresponds to the ID of the word found at that index
     for word in words:
-    # If word is in the dictionary use the word ID,
-    # else use the ID of the special token "UNK"
-    if word in dictionary:
-      index = dictionary[word]
-    else:
-      index = 0  # dictionary['UNK']
-      unk_count = unk_count + 1
-    data.append(index)
+        # If word is in the dictionary use the word ID,
+        # else use the ID of the special token "UNK"
+        if word in dictionary:
+          index = dictionary[word]
+        else:
+          index = 0  # dictionary['UNK']
+          unk_count = unk_count + 1
+        data.append(index)
 
     # update the count variable with the number of UNK occurences
     count[0][1] = unk_count
