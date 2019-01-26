@@ -64,3 +64,4 @@ def build_dataset(words):
   assert len(dictionary) == vocabulary_size
 
   return data, count, dictionary, reverse_dictionary
+data, count, dictionary, reverse_dictionary = build_dataset(words)
