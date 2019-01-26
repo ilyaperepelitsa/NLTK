@@ -171,3 +171,15 @@ softmax_weights = tf.Variable(
                         stddev=0.5 / math.sqrt(embedding_size))
 )
 softmax_biases = tf.Variable(tf.random_uniform([vocabulary_size],0.0,0.01))
+
+
+# Model.
+# Look up embeddings for a batch of inputs.
+embed = tf.nn.embedding_lookup(embeddings, train_dataset)
+
+# Compute the softmax loss, using a sample of the negative labels each time.
+loss = tf.reduce_mean(
+    tf.nn.sampled_softmax_loss(
+        weights=softmax_weights, biases=softmax_biases, inputs=embed,
+        labels=train_labels, num_sampled=num_sampled, num_classes=vocabulary_size)
+)
