@@ -26,4 +26,4 @@ text = pew['Markdown'].str.cat(sep = ". ")
 len(text)
 tokenized_text = nltk.word_tokenize(text)
 
-tokenized_text[0:10]
+tokenized_text[0:100]
