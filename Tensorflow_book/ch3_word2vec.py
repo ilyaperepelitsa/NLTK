@@ -31,22 +31,22 @@ tokenized_text = nltk.word_tokenize(lower_text)
 vocabulary_size = 50000
 
 def build_dataset(words):
-  count = [['UNK', -1]]
-  # Gets only the vocabulary_size most common words as the vocabulary
-  # All the other words will be replaced with UNK token
-  count.extend(collections.Counter(words).most_common(vocabulary_size - 1))
-  dictionary = dict()
+    count = [['UNK', -1]]
+    # Gets only the vocabulary_size most common words as the vocabulary
+    # All the other words will be replaced with UNK token
+    count.extend(collections.Counter(words).most_common(vocabulary_size - 1))
+    dictionary = dict()
 
-  # Create an ID for each word by giving the current length of the dictionary
-  # And adding that item to the dictionary
-  for word, _ in count:
-    dictionary[word] = len(dictionary)
+    # Create an ID for each word by giving the current length of the dictionary
+    # And adding that item to the dictionary
+    for word, _ in count:
+        dictionary[word] = len(dictionary)
 
-  data = list()
-  unk_count = 0
-  # Traverse through all the text we have and produce a list
-  # where each element corresponds to the ID of the word found at that index
-  for word in words:
+    data = list()
+    unk_count = 0
+    # Traverse through all the text we have and produce a list
+    # where each element corresponds to the ID of the word found at that index
+    for word in words:
     # If word is in the dictionary use the word ID,
     # else use the ID of the special token "UNK"
     if word in dictionary:
@@ -56,12 +56,13 @@ def build_dataset(words):
       unk_count = unk_count + 1
     data.append(index)
 
-  # update the count variable with the number of UNK occurences
-  count[0][1] = unk_count
+    # update the count variable with the number of UNK occurences
+    count[0][1] = unk_count
 
-  reverse_dictionary = dict(zip(dictionary.values(), dictionary.keys()))
-  # Make sure the dictionary is of size of the vocabulary
-  assert len(dictionary) == vocabulary_size
+    reverse_dictionary = dict(zip(dictionary.values(), dictionary.keys()))
+    # Make sure the dictionary is of size of the vocabulary
+    assert len(dictionary) == vocabulary_size
 
-  return data, count, dictionary, reverse_dictionary
+    return data, count, dictionary, reverse_dictionary
+
 data, count, dictionary, reverse_dictionary = build_dataset(words)
