@@ -93,8 +93,8 @@
 
 "ch3_w2v_skipgram_reddit" : {
 "name" : "ch3_w2v_skipgram_reddit",
-"logs" : "basic_word2vec_ch3_nintendo",
-"summary" : "basic_word2vec_ch3_nintendo",
+"logs" : "ch3_w2v_skipgram_reddit",
+"summary" : "ch3_w2v_skipgram_reddit",
 "num_steps" : 500000,
 "vocabulary_size" : 50000,
 "minibatch_size" : 120,
