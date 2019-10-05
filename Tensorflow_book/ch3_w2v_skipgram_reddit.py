@@ -36,7 +36,7 @@ def check_dir_create(path):
 
 check_dir_create(LOGS_PATH)
 hyper_params = json.load(open(JSON_PATH))
-working_params = hyper_params["basic_word2vec_ch3_bible"]
+working_params = hyper_params["ch3_w2v_skipgram_reddit"]
 
 
 DATA = pd.read_csv("/Volumes/data_pew/text_data/rus-eng-bible/verses.csv")
