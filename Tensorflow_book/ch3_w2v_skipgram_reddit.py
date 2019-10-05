@@ -60,7 +60,8 @@ del(DATA)
 lower_text = text.lower()
 tokenized_text = nltk.word_tokenize(lower_text)
 
-#
+##########################################################
+import pickle
 
 
 
