@@ -49,7 +49,7 @@ del(DATA_2)
 DATA.head()
 
 DATA = pd.concat([DATA['text'], DATA["parent_text"]], axis = 0)
-
+DATA
 text = DATA['Dialogue'].str.cat(sep = ". ")
 len(text)
 # text
