@@ -46,7 +46,7 @@ DATA = pd.concat([DATA, DATA_2], axis = 0)
 
 del(DATA_2)
 
-DATA_@
+DATA.shape
 # pew
 text = DATA['Dialogue'].str.cat(sep = ". ")
 len(text)
