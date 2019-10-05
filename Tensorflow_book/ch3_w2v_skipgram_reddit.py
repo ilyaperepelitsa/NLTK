@@ -50,7 +50,7 @@ DATA.head()
 
 DATA = pd.concat([DATA['text'], DATA["parent_text"]], axis = 0)
 # DATA
-DATA.sample(frac=0.1, replace=False, random_state=1)
+DATA = DATA.sample(frac=0.1, replace=False, random_state=1)
 
 text = DATA.str.cat(sep = ". ")
 del(DATA)
