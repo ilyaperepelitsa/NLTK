@@ -59,6 +59,11 @@ del(DATA)
 # text
 lower_text = text.lower()
 tokenized_text = nltk.word_tokenize(lower_text)
+
+#
+
+
+
 # len(tokenized_text)/1000000
 
 VOCABULARY_SIZE = working_params["vocabulary_size"]
