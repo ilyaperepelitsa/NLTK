@@ -89,7 +89,22 @@
 "print_and_save": 5000
 }
 
+,
 
+"basic_word2vec_ch3_nintendo" : {
+"name" : "basic_word2vec_ch3_nintendo",
+"logs" : "basic_word2vec_ch3_nintendo",
+"summary" : "basic_word2vec_ch3_nintendo",
+"num_steps" : 500000,
+"vocabulary_size" : 50000,
+"minibatch_size" : 120,
+"embedding_size" : 50,
+"window_size" : 10,
+"valid_size" : 16,
+"valid_window" : 50,
+"num_sampled" : 32,
+"print_and_save": 5000
+}
 
 
 }
