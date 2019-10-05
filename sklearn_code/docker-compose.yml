@@ -1,0 +1,68 @@
+version: "3.6"
+
+services:
+################ PREREQUISITE SERVICES
+
+  postgres_domrf:
+    container_name: postgres_domrf
+    image: postgres
+    ports:
+      - "5432:5432"
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=example
+      - POSTGRES_USER=vtbuser
+      - POSTGRES_DB=domrf_test
+    volumes:
+      - db-data:/var/lib/postgresql/test
+    networks:
+      - default
+
+  tor:
+    container_name: tor
+    image: yamacake/basic_tor:latest
+    restart: always
+    ports:
+      - "9050:9050"
+      - "9051:9051"
+    networks:
+      - default
+
+
+  domrf_scrapy:
+    container_name: domrf_scrapy
+    image: yamacake/domrf_scrapy:latest
+    restart: always
+    ports:
+      - "6801:6801"
+    depends_on:
+      - postgres_domrf
+      - tor
+    networks:
+      - default
+
+  domrf_cron:
+    container_name: domrf_cron
+    image: yamacake/domrf_cron:latest
+    restart: always
+    ports:
+      - "6969:6969"
+    depends_on:
+      - postgres_domrf
+      - tor
+      - domrf_scrapy
+    networks:
+      - default
+
+volumes:
+  db-data:
+
+networks:
+  default:
+    driver: bridge
+
+#
+#
+# networks:
+#   default:
+#     driver: bridge

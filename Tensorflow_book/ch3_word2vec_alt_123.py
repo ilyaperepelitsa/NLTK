@@ -16,127 +16,138 @@ import operator # sorting items in dictionary by value
 from math import ceil
 import csv
 # nltk.download()
-
+import json
 import pandas as pd
 
 
-pew = pd.read_csv("/Volumes/data_pew/text_data/stack_overflow_pandas/SO_pandas.csv")
+ROOT_PATH = os.path.join(os.path.dirname(os.path.abspath("__file__")), "Tensorflow_book")
+JSON_PATH = os.path.join(os.path.dirname(os.path.abspath("__file__")),"Tensorflow_book", "tf_specs.json")
+LOGS_PATH = os.path.join(ROOT_PATH, "logs")
+SUMMARY_PATH = os.path.join(ROOT_PATH, "summary")
+METRICS_PATH = os.path.join(ROOT_PATH, "metrics.json")
+
+
+
+def check_dir_create(path):
+    if os.path.exists(path):
+        pass
+    else:
+        os.mkdir(path)
+
+check_dir_create(LOGS_PATH)
+hyper_params = json.load(open(JSON_PATH))
+working_params = hyper_params["basic_word2vec_ch3_v1"]
+
+
+DATA = pd.read_csv("/Volumes/data_pew/text_data/stack_overflow_pandas/SO_pandas.csv")
 # pew
-text = pew['Markdown'].str.cat(sep = ". ")
-len(text)
+text = DATA['Markdown'].str.cat(sep = ". ")
+# len(text)
 lower_text = text.lower()
 tokenized_text = nltk.word_tokenize(lower_text)
 # len(tokenized_text)/1000000
 
+
+
 vocabulary_size = 50000
 
 def build_dataset(words):
-    count = [['UNK', -1]]
-    # Gets only the vocabulary_size most common words as the vocabulary
-    # All the other words will be replaced with UNK token
-    count.extend(collections.Counter(words).most_common(vocabulary_size - 1))
-    dictionary = dict()
+  count = [['UNK', -1]]
+  # Gets only the vocabulary_size most common words as the vocabulary
+  # All the other words will be replaced with UNK token
+  count.extend(collections.Counter(words).most_common(vocabulary_size - 1))
+  dictionary = dict()
 
-    # Create an ID for each word by giving the current length of the dictionary
-    # And adding that item to the dictionary
-    for word, _ in count:
-        dictionary[word] = len(dictionary)
+  # Create an ID for each word by giving the current length of the dictionary
+  # And adding that item to the dictionary
+  for word, _ in count:
+    dictionary[word] = len(dictionary)
 
-    data = list()
-    unk_count = 0
-    # Traverse through all the text we have and produce a list
-    # where each element corresponds to the ID of the word found at that index
-    for word in words:
-        # If word is in the dictionary use the word ID,
-        # else use the ID of the special token "UNK"
-        if word in dictionary:
-          index = dictionary[word]
-        else:
-          index = 0  # dictionary['UNK']
-          unk_count = unk_count + 1
-        data.append(index)
+  data = list()
+  unk_count = 0
+  # Traverse through all the text we have and produce a list
+  # where each element corresponds to the ID of the word found at that index
+  for word in words:
+    # If word is in the dictionary use the word ID,
+    # else use the ID of the special token "UNK"
+    if word in dictionary:
+      index = dictionary[word]
+    else:
+      index = 0  # dictionary['UNK']
+      unk_count = unk_count + 1
+    data.append(index)
 
-    # update the count variable with the number of UNK occurences
-    count[0][1] = unk_count
+  # update the count variable with the number of UNK occurences
+  count[0][1] = unk_count
 
-    reverse_dictionary = dict(zip(dictionary.values(), dictionary.keys()))
-    # Make sure the dictionary is of size of the vocabulary
-    assert len(dictionary) == vocabulary_size
+  reverse_dictionary = dict(zip(dictionary.values(), dictionary.keys()))
+  # Make sure the dictionary is of size of the vocabulary
+  assert len(dictionary) == vocabulary_size
 
-    return data, count, dictionary, reverse_dictionary
+  return data, count, dictionary, reverse_dictionary
 
 data, count, dictionary, reverse_dictionary = build_dataset(tokenized_text)
-
+print('Most common words (+UNK)', count[:5])
+print('Sample data', data[:10])
+# del words  # Hint to reduce memory.
 # data
-# count
-# dictionary
-# reverse_dictionary
 
-# dictionary
-# count[0:30]
+
 data_index = 0
 
-
 def generate_batch_skip_gram(batch_size, window_size):
-    # data_index is updated by 1 everytime we read a data point
-    global data_index
+  # data_index is updated by 1 everytime we read a data point
+  global data_index
 
-    # two numpy arras to hold target words (batch)
-    # and context words (labels)
-    batch = np.ndarray(shape=(batch_size), dtype=np.int32)
-    labels = np.ndarray(shape=(batch_size, 1), dtype=np.int32)
+  # two numpy arras to hold target words (batch)
+  # and context words (labels)
+  batch = np.ndarray(shape=(batch_size), dtype=np.int32)
+  labels = np.ndarray(shape=(batch_size, 1), dtype=np.int32)
 
-    # span defines the total window size, where
-    # data we consider at an instance looks as follows.
-    # [ skip_window target skip_window ]
-    span = 2 * window_size + 1
+  # span defines the total window size, where
+  # data we consider at an instance looks as follows.
+  # [ skip_window target skip_window ]
+  span = 2 * window_size + 1
 
-    # The buffer holds the data contained within the span
-    buffer = collections.deque(maxlen=span)
+  # The buffer holds the data contained within the span
+  buffer = collections.deque(maxlen=span)
 
-    # Fill the buffer and update the data_index
-    for _ in range(span):
-        buffer.append(data[data_index])
-        data_index = (data_index + 1) % len(data)
+  # Fill the buffer and update the data_index
+  for _ in range(span):
+    buffer.append(data[data_index])
+    data_index = (data_index + 1) % len(data)
 
-    # This is the number of context words we sample for a single target word
-    num_samples = 2*window_size
+  # This is the number of context words we sample for a single target word
+  num_samples = 2*window_size
 
-    # We break the batch reading into two for loops
-    # The inner for loop fills in the batch and labels with
-    # num_samples data points using data contained withing the span
-    # The outper for loop repeat this for batch_size//num_samples times
-    # to produce a full batch
-    for i in range(batch_size // num_samples):
-        k=0
-        # avoid the target word itself as a prediction
-        # fill in batch and label numpy arrays
-        for j in list(range(window_size))+list(range(window_size+1,2*window_size+1)):
-            batch[i * num_samples + k] = buffer[window_size]
-            labels[i * num_samples + k, 0] = buffer[j]
-            k += 1
+  # We break the batch reading into two for loops
+  # The inner for loop fills in the batch and labels with
+  # num_samples data points using data contained withing the span
+  # The outper for loop repeat this for batch_size//num_samples times
+  # to produce a full batch
+  for i in range(batch_size // num_samples):
+    k=0
+    # avoid the target word itself as a prediction
+    # fill in batch and label numpy arrays
+    for j in list(range(window_size))+list(range(window_size+1,2*window_size+1)):
+      batch[i * num_samples + k] = buffer[window_size]
+      labels[i * num_samples + k, 0] = buffer[j]
+      k += 1
 
-        # Everytime we read num_samples data points,
-        # we have created the maximum number of datapoints possible
-        # withing a single span, so we need to move the span by 1
-        # to create a fresh new span
-        buffer.append(data[data_index])
-        data_index = (data_index + 1) % len(data)
-    return batch, labels
+    # Everytime we read num_samples data points,
+    # we have created the maximum number of datapoints possible
+    # withing a single span, so we need to move the span by 1
+    # to create a fresh new span
+    buffer.append(data[data_index])
+    data_index = (data_index + 1) % len(data)
+  return batch, labels
 
-print('data:', [reverse_dictionary[di] for di in data[:8]])
 
-for window_size in [1, 2]:
-    data_index = 0
-    batch, labels = generate_batch_skip_gram(batch_size=8, window_size=window_size)
-    print('\nwith window_size = %d:' %window_size)
-    print('    batch:', [reverse_dictionary[bi] for bi in batch])
-    print('    labels:', [reverse_dictionary[li] for li in labels.reshape(8)])
 
 
 batch_size = 128 # Data points in a single batch
 embedding_size = 128 # Dimension of the embedding vector.
-window_size = 6 # How many words to consider left and right.
+window_size = 4 # How many words to consider left and right.
 
 # We pick a random validation set to sample nearest neighbors
 valid_size = 16 # Random set of words to evaluate similarity on.
@@ -146,11 +157,9 @@ valid_window = 50
 # When selecting valid examples, we select some of the most frequent words as well as
 # some moderately rare words as well
 valid_examples = np.array(random.sample(range(valid_window), valid_size))
-# valid_examples
 valid_examples = np.append(valid_examples,random.sample(range(1000, 1000+valid_window), valid_size),axis=0)
-# valid_examples
-num_sampled = 32 # Number of negative examples to sample.
 
+num_sampled = 32 # Number of negative examples to sample.
 
 
 tf.reset_default_graph()
@@ -164,9 +173,6 @@ train_labels = tf.placeholder(tf.int32, shape=[batch_size, 1])
 # as validation data
 valid_dataset = tf.constant(valid_examples, dtype=tf.int32)
 
-# [reverse_dictionary[bi] for bi in valid_examples]
-
-# Variables
 
 # Embedding layer, contains the word embeddings
 embeddings = tf.Variable(tf.random_uniform([vocabulary_size, embedding_size], -1.0, 1.0))
@@ -179,8 +185,6 @@ softmax_weights = tf.Variable(
 softmax_biases = tf.Variable(tf.random_uniform([vocabulary_size],0.0,0.01))
 
 
-# Model.
-# Look up embeddings for a batch of inputs.
 embed = tf.nn.embedding_lookup(embeddings, train_dataset)
 
 # Compute the softmax loss, using a sample of the negative labels each time.
@@ -191,23 +195,23 @@ loss = tf.reduce_mean(
 )
 
 
-# Compute the similarity between minibatch examples and all embeddings.
-# We use the cosine distance:
 norm = tf.sqrt(tf.reduce_sum(tf.square(embeddings), 1, keepdims=True))
 normalized_embeddings = embeddings / norm
-valid_embeddings = tf.nn.embedding_lookup(normalized_embeddings, valid_dataset)
+valid_embeddings = tf.nn.embedding_lookup(
+                normalized_embeddings, valid_dataset)
 similarity = tf.matmul(valid_embeddings, tf.transpose(normalized_embeddings))
 
-
-# Optimizer.
 optimizer = tf.train.AdagradOptimizer(1.0).minimize(loss)
-optimizer
 
 
-num_steps = 300001
+num_steps = 100001
 skip_losses = []
 # ConfigProto is a way of providing various configuration settings
 # required to execute the graph
+
+generate_batch_skip_gram(batch_size, window_size)
+
+
 with tf.Session(config=tf.ConfigProto(allow_soft_placement=True)) as session:
   # Initialize the variables in the graph
   tf.global_variables_initializer().run()
@@ -256,10 +260,6 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True)) as session:
         print(log)
   skip_gram_final_embeddings = normalized_embeddings.eval()
 
-# We will save the word vectors learned and the loss over time
-# as this information is required later for comparisons
-np.save('skip_embeddings',skip_gram_final_embeddings)
 
-with open('skip_losses.csv', 'wt') as f:
-    writer = csv.writer(f, delimiter=',')
-    writer.writerow(skip_losses)
+
+generate_batch_skip_gram(batch_size, window_size)

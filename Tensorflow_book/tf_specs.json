@@ -1,0 +1,95 @@
+{
+"basic_word2vec_ch3_v1" : {
+"name" : "basic_word2vec_ch3_v1",
+"logs" : "basic_word2vec_ch3_v1",
+"summary" : "basic_word2vec_ch3_v1",
+"num_steps" : 500000,
+"vocabulary_size" : 50000,
+"minibatch_size" : 120,
+"embedding_size" : 128,
+"window_size" : 5,
+"valid_size" : 16,
+"valid_window" : 50,
+"num_sampled" : 32,
+"print_and_save": 5000
+},
+
+"basic_word2vec_ch3_v2" : {
+"name" : "basic_word2vec_ch3_v1",
+"logs" : "basic_word2vec_ch3_v1",
+"summary" : "basic_word2vec_ch3_v1",
+"num_steps" : 500000,
+"vocabulary_size" : 50000,
+"minibatch_size" : 120,
+"embedding_size" : 250,
+"window_size" : 10,
+"valid_size" : 16,
+"valid_window" : 50,
+"num_sampled" : 32,
+"print_and_save": 5000
+},
+
+"basic_word2vec_ch3_v3" : {
+"name" : "basic_word2vec_ch3_v3",
+"logs" : "basic_word2vec_ch3_v3",
+"summary" : "basic_word2vec_ch3_v3",
+"num_steps" : 500000,
+"vocabulary_size" : 50000,
+"minibatch_size" : 120,
+"embedding_size" : 50,
+"window_size" : 10,
+"valid_size" : 16,
+"valid_window" : 50,
+"num_sampled" : 32,
+"print_and_save": 5000
+},
+
+"basic_word2vec_ch3_scienfeld" : {
+"name" : "basic_word2vec_ch3_scienfeld",
+"logs" : "basic_word2vec_ch3_scienfeld",
+"summary" : "basic_word2vec_ch3_scienfeld",
+"num_steps" : 500000,
+"vocabulary_size" : 20000,
+"minibatch_size" : 120,
+"embedding_size" : 50,
+"window_size" : 10,
+"valid_size" : 16,
+"valid_window" : 50,
+"num_sampled" : 32,
+"print_and_save": 5000
+},
+
+"basic_word2vec_ch3_bible" : {
+"name" : "basic_word2vec_ch3_bible",
+"logs" : "basic_word2vec_ch3_bible",
+"summary" : "basic_word2vec_ch3_bible",
+"num_steps" : 500000,
+"vocabulary_size" : 20000,
+"minibatch_size" : 120,
+"embedding_size" : 50,
+"window_size" : 10,
+"valid_size" : 16,
+"valid_window" : 50,
+"num_sampled" : 32,
+"print_and_save": 5000
+},
+
+"basic_word2vec_ch3_nintendo" : {
+"name" : "basic_word2vec_ch3_nintendo",
+"logs" : "basic_word2vec_ch3_nintendo",
+"summary" : "basic_word2vec_ch3_nintendo",
+"num_steps" : 500000,
+"vocabulary_size" : 50000,
+"minibatch_size" : 120,
+"embedding_size" : 50,
+"window_size" : 10,
+"valid_size" : 16,
+"valid_window" : 50,
+"num_sampled" : 32,
+"print_and_save": 5000
+}
+
+
+
+
+}
