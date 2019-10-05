@@ -55,7 +55,7 @@ DATA = DATA.sample(frac=0.1, replace=False, random_state=1)
 text = DATA.str.cat(sep = ". ")
 del(DATA)
 
-text[0:10]
+# text[0:10]
 # text
 lower_text = text.lower()
 tokenized_text = nltk.word_tokenize(lower_text)
