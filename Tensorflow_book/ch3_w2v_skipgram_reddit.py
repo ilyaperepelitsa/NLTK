@@ -47,7 +47,8 @@ DATA = pd.concat([DATA, DATA_2], axis = 0)
 del(DATA_2)
 
 DATA.head()
-# pew
+
+Dat# pew
 text = DATA['Dialogue'].str.cat(sep = ". ")
 len(text)
 # text
