@@ -44,7 +44,7 @@ DATA_2 = pd.read_csv("/Users/ilyaperepelitsa/quant/NLTK/data/reddit-comment-scor
 
 DATA = pd.concat([DATA, DATA_2], axis = 0).info()
 
-DATA.
+del(DATA_2)
 # pew
 text = DATA['Dialogue'].str.cat(sep = ". ")
 len(text)
