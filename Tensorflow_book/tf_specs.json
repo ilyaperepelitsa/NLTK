@@ -91,8 +91,8 @@
 
 ,
 
-"basic_word2vec_ch3_nintendo" : {
-"name" : "basic_word2vec_ch3_nintendo",
+"ch3_w2v_skipgram_reddit" : {
+"name" : "ch3_w2v_skipgram_reddit",
 "logs" : "basic_word2vec_ch3_nintendo",
 "summary" : "basic_word2vec_ch3_nintendo",
 "num_steps" : 500000,
