@@ -49,6 +49,7 @@ del(DATA_2)
 DATA.head()
 
 DATA['text']# pew
+DATA[""]
 
 text = DATA['Dialogue'].str.cat(sep = ". ")
 len(text)
