@@ -42,7 +42,7 @@ working_params = hyper_params["ch3_w2v_skipgram_reddit"]
 DATA = pd.read_csv("/Users/ilyaperepelitsa/quant/NLTK/data/reddit-comment-score-prediction/comments_negative.csv")
 DATA_2 = pd.read_csv("/Users/ilyaperepelitsa/quant/NLTK/data/reddit-comment-score-prediction/comments_positive.csv")
 
-pd.concat()
+pd.concat([DATA, DATA_2])
 # pew
 text = DATA['Dialogue'].str.cat(sep = ". ")
 len(text)
