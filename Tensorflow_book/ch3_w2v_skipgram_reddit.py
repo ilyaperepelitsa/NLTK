@@ -48,8 +48,7 @@ del(DATA_2)
 
 DATA.head()
 
-DATA['text']# pew
-DATA["parent_text"]
+DATA['text'],  DATA["parent_text"]
 
 text = DATA['Dialogue'].str.cat(sep = ". ")
 len(text)
