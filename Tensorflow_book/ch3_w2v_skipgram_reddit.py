@@ -39,7 +39,7 @@ hyper_params = json.load(open(JSON_PATH))
 working_params = hyper_params["ch3_w2v_skipgram_reddit"]
 
 
-DATA = pd.read_csv("/Volumes/data_pew/text_data/rus-eng-bible/verses.csv")
+DATA = pd.read_csv("/Users/ilyaperepelitsa/quant/NLTK/data/reddit-comment-score-prediction/comments_negative.csv")
 # pew
 text = DATA['Dialogue'].str.cat(sep = ". ")
 len(text)
