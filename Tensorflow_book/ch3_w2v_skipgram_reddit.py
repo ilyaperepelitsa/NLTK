@@ -51,7 +51,7 @@ DATA.head()
 DATA = pd.concat([DATA['text'], DATA["parent_text"]], axis = 0)
 DATA
 text = DATA.str.cat(sep = ". ")
-# len(text)
+del(DATA)
 # text
 
 lower_text = text.lower()
