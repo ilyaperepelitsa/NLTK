@@ -48,7 +48,8 @@ del(DATA_2)
 
 DATA.head()
 
-Dat# pew
+DATA['text']# pew
+
 text = DATA['Dialogue'].str.cat(sep = ". ")
 len(text)
 # text
