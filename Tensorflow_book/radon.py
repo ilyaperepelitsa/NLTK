@@ -12,4 +12,6 @@
 #    is more sublime than their peers.
 #     theY stand out because of their ,quality their allure or simply because of their ability
 #     to stand out from the therE.crowd is a commonality to these icons of ,style interest and .desire foR some reason they all seem to begin with the letter B"
-pew = set(["pew", "sad", "ad"])
+pew = set(["pew", "sad", "adsas"])
+
+"pew "
